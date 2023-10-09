@@ -11,13 +11,12 @@ export const register = (req, res) => {
     const handlePassword = bcrypt.hashSync(req.body.password, salt);
 
     const query =
-      "INSERT INTO USERS (`USERNAME`,`EMAIL`,`PASSWORD`,`NAME`, `COVERPIC`) VALUE (?, ?, ?, ?, ?)";
+      "INSERT INTO USERS (`USERNAME`,`EMAIL`,`PASSWORD`,`NAME`) VALUE (?, ?, ?, ?)";
     const values = [
       req.body.username,
       req.body.email,
       handlePassword,
       req.body.name,
-      req.body.coverPic,
     ];
     db.query(query, values, (err, result) => {
       if (err) return res.status(500).json(err);
