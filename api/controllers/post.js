@@ -10,7 +10,7 @@ export const getPosts = (req, res) => {
     if (err) return res.status(403).json("token is not valid");
 
     const query = `SELECT p.*, U.ID AS USERID, NAME, PROFILEPIC FROM POSTS AS P JOIN USERS AS U ON (U.ID = P.USERID)
-        LEFT JOIN RELATIONSHIPS AS R ON (P.USERID = R.FOLLOWEDUSERID) WHERE R.FOLLOWERUSERID= ? OR P.USERID = ?`;
+        LEFT JOIN RELATIONSHIPS AS R ON (P.USERID = R.FOLLOWEDUSERID) WHERE R.FOLLOWERUSERID= ? OR P.USERID = ? ORDER BY P.CREATEAT DESC`;
     db.query(query, [userInfo.id, userInfo.id], (err, result) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json(result);

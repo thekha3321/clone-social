@@ -1,11 +1,13 @@
 import Post from "../post/Post";
 import "./posts.scss";
 import { makeRequest } from "../../axios";
-import { useEffect, useState } from "react";
+import { AuthContext } from "../../context/authContext";
+import { useEffect, useState, useContext } from "react";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 
 const Posts = () => {
+  const { currentUser } = useContext(AuthContext);
   const [data, setData] = useState([]);
   const [isLoading, setIsLoading] = useState([]);
   const [error, setError] = useState([]);
@@ -21,7 +23,7 @@ const Posts = () => {
   }
   useEffect(()=> {
     getPosts();
-    
+    console.log(currentUser)
   }, [])
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ['posts'],

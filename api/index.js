@@ -39,7 +39,8 @@ app.post('/api/upload', upload.single('file'), (req, res) => {
 
 app.use('/api/users', userRouter)
 app.use('/api/auth/', authRouter)
-app.use('/api', postRouter)
+app.use('/api/posts', postRouter)
+app.use("/api/comments", commentRouter);
 
 app.listen(PORT, ()=> {
     console.log(`listening on Port ${PORT}`);
