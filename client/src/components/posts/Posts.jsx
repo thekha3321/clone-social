@@ -15,7 +15,7 @@ const Posts = () => {
     await makeRequest
     .get("/posts")
     .then((response) => {
-      setData(response.data.reverse());
+      setData(response.data);
     })
     .catch((error) => {
       setError(error);
@@ -23,7 +23,6 @@ const Posts = () => {
   }
   useEffect(()=> {
     getPosts();
-    console.log(currentUser)
   }, [])
   // const { isLoading, error, data } = useQuery({
   //   queryKey: ['posts'],
@@ -36,7 +35,7 @@ const Posts = () => {
   // console.log(`error :${error}`);
   return (
     <div className="posts">
-      {data.map((post) => <Post post={post} key={post.id} />)}
+      {data.length > 0 ? data.map((post) => <Post post={post} key={post.id} />) : <h2>There are no posts!</h2>}
     </div>
   );
 };

@@ -41,6 +41,7 @@ app.use('/api/users', userRouter)
 app.use('/api/auth/', authRouter)
 app.use('/api/posts', postRouter)
 app.use("/api/comments", commentRouter);
+app.use("/api/likes", likeRouter);
 
 app.listen(PORT, ()=> {
     console.log(`listening on Port ${PORT}`);
