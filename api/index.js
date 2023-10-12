@@ -5,6 +5,7 @@ import authRouter from './routes/auth.js'
 import likeRouter from './routes/likes.js'
 import commentRouter from './routes/comments.js'
 import postRouter from './routes/posts.js'
+import relationshipRouter from './routes/relationships.js'
 import cors from 'cors'
 import multer from 'multer'
 import cookieParser from "cookie-parser";
@@ -41,7 +42,9 @@ app.use('/api/users', userRouter)
 app.use('/api/auth/', authRouter)
 app.use('/api/posts', postRouter)
 app.use("/api/comments", commentRouter);
-app.use("/api/likes", likeRouter);
+app.use("/api/likes", likeRouter);relationshipRouter
+app.use("/api/relationships", relationshipRouter);
+
 
 app.listen(PORT, ()=> {
     console.log(`listening on Port ${PORT}`);

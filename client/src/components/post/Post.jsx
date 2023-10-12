@@ -38,6 +38,9 @@ const Post = ({ post }) => {
       },
     }
   );
+  const handleLike = () => {
+    mutation.mutate(data.includes(currentUser.id));
+  };
   // const deleteMutation = useMutation(
   //   (postId) => {
   //     return makeRequest.delete("/posts/" + postId);
@@ -50,9 +53,6 @@ const Post = ({ post }) => {
   //   }
   // );
 
-  const handleLike = () => {
-    mutation.mutate(data.includes(currentUser.id));
-  };
 
   // const handleDelete = () => {
   //   deleteMutation.mutate(post.id);

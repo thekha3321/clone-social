@@ -3,15 +3,19 @@ import db from "../connect.js";
 import Jwt from "jsonwebtoken";
 
 export const getPosts = (req, res) => {
+  const userId = req.query.userId;
   const token = req.cookies.accessToken;
   if (!token) return res.status(401).json("not logged in");
 
   Jwt.verify(token, "secretkey", (err, userInfo) => {
     if (err) return res.status(403).json("token is not valid");
 
-    const query = `SELECT p.*, U.ID AS USERID, NAME, PROFILEPIC FROM POSTS AS P JOIN USERS AS U ON (U.ID = P.USERID)
-        LEFT JOIN RELATIONSHIPS AS R ON (P.USERID = R.FOLLOWEDUSERID) WHERE R.FOLLOWERUSERID= ? OR P.USERID = ? ORDER BY P.CREATEAT DESC`;
-    db.query(query, [userInfo.id, userInfo.id], (err, result) => {
+    const query = userId
+      ? `SELECT p.*, u.id AS userId, name, profilePic FROM posts AS p JOIN users AS u ON (u.id = p.userId) WHERE p.userId = ?`
+      : `SELECT p.*, u.id AS userId, name, profilePic FROM posts AS p JOIN users AS u ON (u.id = p.userId)
+  LEFT JOIN relationships AS r ON (p.userId = r.followedUserId) WHERE r.followerUserId= ? OR p.userId =?`;
+    const values = [userId ? [userId] : [userInfo.id, userInfo.id]];
+    db.query(query, values, (err, result) => {
       if (err) return res.status(500).json(err);
       return res.status(200).json(result);
     });
